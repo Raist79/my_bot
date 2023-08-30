@@ -36,6 +36,12 @@
             </geometry>
             <material name="white"/>
         </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.075"/>
+            <geometry>
+                <box size="0.4 0.3 0.15"/>
+            </geometry>
+        </collision>
     </link>
 
 <!--left front wheel-->
@@ -54,6 +60,11 @@
         </geometry>
         <material name="blue"/>
     </visual>
+    <collision>
+        <geometry>
+            <cylinder radius="0.075" length="0.04"/>
+        </geometry>
+    </collision>
 </link>
 <!--right front wheel-->
 
@@ -71,6 +82,11 @@
         </geometry>
         <material name="blue"/>
     </visual>
+    <collision>
+        <geometry>
+            <cylinder radius="0.075" length="0.04"/>
+        </geometry>
+    </collision>
 </link>
 
 <!--left back wheel-->
@@ -89,6 +105,11 @@
         </geometry>
         <material name="blue"/>
     </visual>
+    <collision>
+        <geometry>
+            <cylinder radius="0.075" length="0.04"/>
+        </geometry>
+    </collision>
 </link>
 <!--right back wheel-->
 
@@ -106,5 +127,10 @@
         </geometry>
         <material name="blue"/>
     </visual>
+    <collision>
+        <geometry>
+            <cylinder radius="0.075" length="0.04"/>
+        </geometry>
+    </collision>
 </link>
 </robot>
