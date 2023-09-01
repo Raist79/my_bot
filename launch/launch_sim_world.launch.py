@@ -15,6 +15,7 @@ def generate_launch_description():
    
   # Set the path to this package.
   pkg_share = FindPackageShare(package='my_bot').find('my_bot')
+  #pkg_controller_manager = os.path.join(pkg_share, 'config', 'controller_manager')   
  
   # Set the path to the world file
   world_file_name = 'my_world.world'
@@ -60,7 +61,7 @@ def generate_launch_description():
     
   # Specify the actions
    
-  # Start Gazebo server
+   # Start Gazebo server
   start_gazebo_server_cmd = IncludeLaunchDescription(
     PythonLaunchDescriptionSource(os.path.join(pkg_gazebo_ros, 'launch', 'gzserver.launch.py')),
     condition=IfCondition(use_simulator),
@@ -69,8 +70,15 @@ def generate_launch_description():
   # Start Gazebo client    
   start_gazebo_client_cmd = IncludeLaunchDescription(
     PythonLaunchDescriptionSource(os.path.join(pkg_gazebo_ros, 'launch', 'gzclient.launch.py')),
-    condition=IfCondition(PythonExpression([use_simulator, ' and not ', headless])))
+    condition=IfCondition(PythonExpression([use_simulator, ' and not ', headless]))) 
  
+ 
+     # Include the Gazebo launch file, provided by the gazebo_ros package
+  gazebo = IncludeLaunchDescription(
+                PythonLaunchDescriptionSource([os.path.join(
+                    get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')]),
+             )
+
  
   spawn_entity = Node(package='gazebo_ros', executable='spawn_entity.py',
                         arguments=['-topic', 'robot_description',
@@ -79,13 +87,13 @@ def generate_launch_description():
   
   diff_drive_spawner = Node(
         package="controller_manager",
-        executable="spawner.py",
+        executable="spawner",
         arguments=["diff_cont"],
   )
 
   joint_broad_spawner = Node(
         package="controller_manager",
-        executable="spawner.py",
+        executable="spawner",
         arguments=["joint_broad"],
   )
   # Create the launch description and populate
@@ -96,13 +104,18 @@ def generate_launch_description():
   ld.add_action(declare_use_sim_time_cmd)
   ld.add_action(declare_use_simulator_cmd)
   ld.add_action(declare_world_cmd)
-  ld.add_action(diff_drive_spawner)
-  ld.add_action(joint_broad_spawner)
- 
-  # Add any actions
+
+
   ld.add_action(rsp)
-  ld.add_action(start_gazebo_server_cmd)
-  ld.add_action(start_gazebo_client_cmd)
+  ld.add_action(gazebo)
+  #ld.add_action(start_gazebo_server_cmd)
+  #ld.add_action(start_gazebo_client_cmd)
   ld.add_action(spawn_entity)
+  #ld.add_action(diff_drive_spawner)
+  #ld.add_action(joint_broad_spawner)
+
+  # Add any actions
+  
+  
  
   return ld
