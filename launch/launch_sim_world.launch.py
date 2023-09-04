@@ -14,7 +14,7 @@ def generate_launch_description():
   pkg_gazebo_ros = FindPackageShare(package='gazebo_ros').find('gazebo_ros')   
    
   # Set the path to this package.
-  pkg_share = FindPackageShare(package='my_bot').find('my_bot')
+  pkg_share = FindPackageShare(package='wallter').find('wallter')
   #pkg_controller_manager = os.path.join(pkg_share, 'config', 'controller_manager')   
  
   # Set the path to the world file
@@ -25,7 +25,7 @@ def generate_launch_description():
   gazebo_models_path = os.path.join(pkg_share, 'models')
   os.environ["GAZEBO_MODEL_PATH"] = gazebo_models_path
 
-  package_name='my_bot' 
+  package_name='wallter' 
   
   rsp = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
@@ -82,7 +82,7 @@ def generate_launch_description():
  
   spawn_entity = Node(package='gazebo_ros', executable='spawn_entity.py',
                         arguments=['-topic', 'robot_description',
-                                   '-entity', 'my_bot'],
+                                   '-entity', 'wallter'],
                         output='screen')
   
   diff_drive_spawner = Node(
